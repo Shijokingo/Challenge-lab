@@ -20,9 +20,9 @@ Run command:
 gcloud container clusters create nucleus-backend \
           --num-nodes 1 \
           --network nucleus-vpc \
-          --region us-east1
+          --zone us-east1-b
 gcloud container clusters get-credentials nucleus-backend \
-          --region us-east1
+          --zone us-east1-b
 
 kubectl create deployment hello-server \
           --image=gcr.io/google-samples/hello-app:2.0
@@ -47,14 +47,14 @@ gcloud compute instance-templates create web-server-template \
           --metadata-from-file startup-script=startup.sh \
           --network nucleus-vpc \
           --machine-type g1-small \
-          --region us-east1
+          --zone us-east1-b
 
 
 gcloud compute instance-groups managed create web-server-group \
           --base-instance-name web-server \
           --size 2 \
           --template web-server-template \
-          --region us-east1
+          --zone us-east1-b
 
 
 gcloud compute firewall-rules create web-server-firewall \
@@ -67,7 +67,7 @@ gcloud compute http-health-checks create http-basic-check
 gcloud compute instance-groups managed \
           set-named-ports web-server-group \
           --named-ports http:80 \
-          --region us-east1
+          --zone us-east1-b
 
 
 gcloud compute backend-services create web-server-backend \
